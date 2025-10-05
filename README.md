@@ -1,5 +1,5 @@
-Hi guys :D
+CSE 360 - Team 14
 
-Phase 2 of Team Project !!!!
+Team Project Phase 2 (In Progress)
 
 (We can put our individual tasks here)
