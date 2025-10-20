@@ -1,0 +1,97 @@
+/* list backgrounds (applies to Read Posts & Search Posts lists) */
+.list-view, .list-cell {
+  -fx-background-color: #0f1318;
+  -fx-control-inner-background: #0f1318;
+}
+.list-cell:filled:selected, .list-cell:filled:selected:hover {
+  -fx-background-color: #1f2a33;
+}
+/* remove alternating stripes if you see them */
+.list-view .virtual-flow .clipped-container .sheet .list-cell {
+  -fx-background-insets: 0;
+}
+
+/* Read Posts cell */
+.post-row { -fx-background-color: transparent; }
+.post-title { -fx-text-fill: #e8eef5; }  /* readable title */
+.post-meta  { -fx-text-fill: #a7b3bf; }
+.post-counts{ -fx-text-fill: #9db4c5; }
+.post-unread-dot { -fx-text-fill: #1e88e5; }
+
+/* Search Results cell */
+.search-row { -fx-background-color: transparent; }
+.search-title { -fx-text-fill: #e8eef5; -fx-font-size: 14px; -fx-font-weight: bold; }
+.search-meta-primary { -fx-text-fill: #8ab4ff; -fx-font-weight: 600; }
+.search-meta { -fx-text-fill: #a7b3bf; }
+.search-preview { -fx-text-fill: #d5dde6; }
+.search-avatar { -fx-text-fill: #8b8b8b; -fx-font-size: 18px; }
+
+/* Details column theme + scrollpane transparency */
+.details-root {
+  -fx-background-color: #0f1318;         /* same dark as lists */
+  -fx-padding: 8 8 12 8;                 /* optional: keeps edges clean */
+}
+
+/* Make the ScrollPane itself and its viewport transparent so the dark bg shows */
+.scroll-pane {
+  -fx-background-color: transparent;
+}
+.scroll-pane > .viewport {
+  -fx-background-color: transparent;
+}
+.scroll-pane .corner {
+  -fx-background-color: transparent;
+}
+
+/* Optional: slim, dark scrollbar track/thumb (tweak if you like) */
+.scroll-pane .scroll-bar:vertical,
+.scroll-pane .scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+.scroll-pane .track {
+  -fx-background-color: #12171e;
+}
+.scroll-pane .thumb {
+  -fx-background-color: #2a3744;
+  -fx-background-radius: 4;
+}
+
+/* Details text colors scoped to the details column only */
+.details-root .label { 
+  -fx-text-fill: #e8eef5;
+}
+.details-root .text-area {
+  -fx-control-inner-background: #0f1318;
+  -fx-text-fill: #e8eef5;
+}
+.details-root .text-area .content {
+  -fx-background-color: #0f1318;
+}
+
+/* "Filter" title + segmented buttons (dark theme) */
+.section-title {
+  -fx-text-fill: #e8eef5;
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+  -fx-opacity: 0.9;
+}
+
+.kindbar { 
+  -fx-padding: 0 0 8 0; 
+  -fx-alignment: CENTER_LEFT;
+}
+
+.seg-toggle {
+  -fx-background-color: #1a2430;
+  -fx-text-fill: #e8eef5;
+  -fx-background-insets: 0;
+  -fx-background-radius: 6;
+  -fx-padding: 6 10 6 10;
+  -fx-font-weight: 600;
+}
+.seg-toggle:selected {
+  -fx-background-color: #2a3744;
+}
+.seg-left  { -fx-background-radius: 8 0 0 8; }
+.seg-mid   { -fx-background-radius: 0; }
+.seg-right { -fx-background-radius: 0 8 8 0; }
