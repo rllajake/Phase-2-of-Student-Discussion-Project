@@ -10,6 +10,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.util.Objects;
 
+import entityClasses.PostItem;
+import entityClasses.PostCardCell;
+
 public class ViewSearchPosts {
 
     public static void displaySearchPosts(Stage stage, User user) {
