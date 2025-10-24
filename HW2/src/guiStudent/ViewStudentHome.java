@@ -68,6 +68,7 @@ public class ViewStudentHome {
 	protected static Button button_CreatePost = new Button("Create New Post");
 	protected static Button button_ReadPosts = new Button("Read Posts");
 	protected static Button button_SearchPosts = new Button("Search Posts");
+	protected static Button button_MyPosts = new Button("Read My Posts");
 
 	// This is the end of the GUI objects for the page.
 	
@@ -184,13 +185,17 @@ public class ViewStudentHome {
 		button_SearchPosts.setOnAction((event) -> 
 			{ControllerStudentHome.searchPosts(); });
 
+		setupButtonUI(button_MyPosts, "Dialog", 16, 250, Pos.CENTER, 270, 350);
+		button_MyPosts.setOnAction((event) -> 
+			{ControllerStudentHome.readMyPosts(); });
+
 		// This is the end of the GUI initialization code
 		
 		// Place all of the widget items into the Root Pane's list of children
          theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, button_UpdateThisUser, line_Separator1,
 	        line_Separator4, button_Logout, button_Quit, 
-	        button_CreatePost, button_ReadPosts, button_SearchPosts);
+	        button_CreatePost, button_ReadPosts, button_SearchPosts, button_MyPosts);
 }
 	
 	
