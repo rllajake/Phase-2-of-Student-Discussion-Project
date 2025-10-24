@@ -48,6 +48,10 @@ public class ControllerStudentHome {
 				ViewStudentHome.theUser);
 	}
 
+	protected static void readMyPosts() {
+		guiMyPosts.ViewMyPosts.displayMyPosts(ViewStudentHome.theStage, 
+				ViewStudentHome.theUser);
+	}
 	
  	/**********
 	 * <p> Method: performLogout() </p>
