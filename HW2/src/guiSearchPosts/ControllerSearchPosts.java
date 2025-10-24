@@ -12,6 +12,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import entityClasses.PostItem;
+import entityClasses.PostCardCell;
+
 public class ControllerSearchPosts {
 
     private final Stage stage;
