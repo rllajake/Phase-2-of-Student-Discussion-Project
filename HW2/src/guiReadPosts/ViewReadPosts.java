@@ -9,6 +9,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.util.Objects;
 
+import entityClasses.PostItem;
+import entityClasses.PostCardCell;
+
 public class ViewReadPosts {
 
     // keep old entry point
