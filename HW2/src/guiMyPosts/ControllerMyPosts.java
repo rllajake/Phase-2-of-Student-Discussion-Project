@@ -19,6 +19,9 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import entityClasses.PostItem;
+import entityClasses.PostCardCell;
+
 public class ControllerMyPosts {
 
     private final Stage stage;
@@ -644,4 +647,5 @@ public class ControllerMyPosts {
             if (ch instanceof javafx.scene.Parent p) collectLegacyHeaderToggles(p, out);
         }
     }
+
 }
