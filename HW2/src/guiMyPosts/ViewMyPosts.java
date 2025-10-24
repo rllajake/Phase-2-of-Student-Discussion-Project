@@ -9,6 +9,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.util.Objects;
 
+import entityClasses.PostItem;
+import entityClasses.PostCardCell;
+
 public class ViewMyPosts {
 
     // keep old entry point
@@ -160,4 +163,5 @@ public class ViewMyPosts {
         stage.setTitle("Read Posts");
         stage.show();
     }
+
 }
