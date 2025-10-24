@@ -19,6 +19,9 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import entityClasses.PostItem;
+import entityClasses.PostCardCell;
+
 public class ControllerReadPosts {
 
     private final Stage stage;
