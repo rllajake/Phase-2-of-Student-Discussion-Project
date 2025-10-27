@@ -19,9 +19,22 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import entityClasses.PostItem;
 import entityClasses.PostCardCell;
+import entityClasses.PostItem;
 
+
+
+/*******
+ * <p> Title: ControllerReadPosts Class. </p>
+ * 
+ * <p> Description: Controller for the Read Posts page within the student workflow, wiring UI events to database-backed actions and coordinating refreshes.</p>
+ * 
+ * <p> Copyright: Group 14 © 2025 </p>
+ * 
+ * @author Group 14
+ * 
+ * @version 1.00		2025-10-24 Initial documentation alignment for guiReadPosts
+ */
 public class ControllerReadPosts {
 
     private final Stage stage;
@@ -154,6 +167,11 @@ public class ControllerReadPosts {
 
     /* ====================== Data loading & filtering ====================== */
 
+	/**********
+	 * <p> Method: loadAllPosts() </p>
+	 * 
+	 * <p> Description: Loads or redraws UI elements based on current model state.</p>
+	 */
     public void loadAllPosts() {
         allPosts.clear();
 
@@ -191,14 +209,21 @@ public class ControllerReadPosts {
 
         applyFilters();
 
-        // auto-select first or a specific id if provided
+     // auto-select first or a specific id if provided (with fallback)
         if (!postList.getItems().isEmpty()) {
             if (initialPostId != null) {
+                boolean matched = false;
                 for (int i = 0; i < postList.getItems().size(); i++) {
                     if (postList.getItems().get(i).id == initialPostId) {
                         postList.getSelectionModel().select(i);
+                        matched = true;
                         break;
                     }
+                }
+                // Fallback: if requested id isn't in the current filtered list,
+                // select the first item so the details pane opens.
+                if (!matched) {
+                    postList.getSelectionModel().select(0);
                 }
             } else {
                 postList.getSelectionModel().select(0);
@@ -206,6 +231,11 @@ public class ControllerReadPosts {
         }
     }
 
+	/**********
+	 * <p> Method: applyFilters() </p>
+	 * 
+	 * <p> Description: Applies active filter controls to the current posts list.</p>
+	 */
     public void applyFilters() {
         final String selectedCat  = getToggleText(catGroup);
         final String selectedKind = getToggleText(kindGroup);
@@ -244,6 +274,11 @@ public class ControllerReadPosts {
 
     /* ====================== Selection & rendering ====================== */
 
+	/**********
+	 * <p> Method: onPostSelected() </p>
+	 * 
+	 * <p> Description: Event handler for UI interaction tied to this action.</p>
+	 */
     public void onPostSelected(PostItem cur) {
         if (cur == null) {
             showPlaceholder(true);
@@ -254,10 +289,10 @@ public class ControllerReadPosts {
         titleLbl.setText(cur.safeTitle());
         metaLbl.setText(String.format("%s • %s • %s", cur.thread, cur.kind, humanize(cur.createdAt)));
 
-        boolean deleted = cur.isDeleted || "[This post has been deleted]".equals(cur.content);
+        boolean deleted = cur.isDeleted || "[This post has been deleted.]".equals(cur.content);
 
         if (deleted) {
-            bodyArea.setText("[This post has been deleted]");
+            bodyArea.setText("[This post has been deleted.]");
             titleLbl.setStyle("-fx-opacity: 0.6;");
             metaLbl.setStyle("-fx-opacity: 0.6;");
         } else {
@@ -276,6 +311,11 @@ public class ControllerReadPosts {
         renderReplies(cur);
     }
 
+	/**********
+	 * <p> Method: renderReplies() </p>
+	 * 
+	 * <p> Description: Loads or redraws UI elements based on current model state.</p>
+	 */
     private void renderReplies(PostItem cur) {
         repliesBox.setFillWidth(true);
         repliesBox.getChildren().clear();
@@ -384,6 +424,11 @@ public class ControllerReadPosts {
 
     /* ====================== Actions ====================== */
 
+	/**********
+	 * <p> Method: onReply() </p>
+	 * 
+	 * <p> Description: Event handler for UI interaction tied to replying to a post.</p>
+	 */
     private void onReply() {
         PostItem cur = postList.getSelectionModel().getSelectedItem();
         if (cur == null) return;
@@ -417,6 +462,11 @@ public class ControllerReadPosts {
         }
     }
 
+	/**********
+	 * <p> Method: onEditPost() </p>
+	 * 
+	 * <p> Description: Event handler for UI interaction tied to editing a post.</p>
+	 */
 
     private void onEditPost() {
         PostItem cur = postList.getSelectionModel().getSelectedItem();
@@ -470,6 +520,11 @@ public class ControllerReadPosts {
         }
     }
 
+	/**********
+	 * <p> Method: onDeletePost() </p>
+	 * 
+	 * <p> Description: Event handler for UI interaction tied to deleting a post.</p>
+	 */
 
     private void onDeletePost() {
         PostItem cur = postList.getSelectionModel().getSelectedItem();
@@ -494,6 +549,11 @@ public class ControllerReadPosts {
 
     /* ====================== Helpers ====================== */
 
+	/**********
+	 * <p> Method: showPlaceholder() </p>
+	 * 
+	 * <p> Description: Displays a UI element or updates the scene to reflect state.</p>
+	 */
     private void showPlaceholder(boolean show) {
         detailsBox.setVisible(!show);
         detailsBox.setManaged(!show);
@@ -501,6 +561,11 @@ public class ControllerReadPosts {
         placeholderBox.setManaged(show);
     }
 
+	/**********
+	 * <p> Method: humanize() </p>
+	 * 
+	 * <p> Description: Displays how long ago a post/reply was made.</p>
+	 */
     private static String humanize(java.sql.Timestamp ts) {
         if (ts == null) return "";
         Duration d = Duration.between(ts.toInstant(), Instant.now());
@@ -513,6 +578,11 @@ public class ControllerReadPosts {
         return days + "d ago";
     }
 
+	/**********
+	 * <p> Method: getToggleText() </p>
+	 * 
+	 * <p> Description: Helper method for giving the user the ability to toggle certain buttons.</p>
+	 */
     private static String getToggleText(ToggleGroup g) {
         if (g == null || g.getSelectedToggle() == null) return null;
         if (g.getSelectedToggle() instanceof ToggleButton tb) return tb.getText();
@@ -520,6 +590,11 @@ public class ControllerReadPosts {
         return null;
     }
 
+	/**********
+	 * <p> Method: normalizeKind() </p>
+	 * 
+	 * <p> Description: Helper method for ensuring proper formatted text.</p>
+	 */
     private static String normalizeKind(String k) {
         if (k == null) return null;
         if ("Posts".equalsIgnoreCase(k)) return "Post";
@@ -527,6 +602,11 @@ public class ControllerReadPosts {
         return k;
     }
 
+	/**********
+	 * <p> Method: onBack() </p>
+	 * 
+	 * <p> Description: Event handler for UI interaction tied to returning back to home page.</p>
+	 */
     public void onBack() {
         try {
             guiStudent.ViewStudentHome.displayStudentHome(stage, user);
@@ -535,6 +615,12 @@ public class ControllerReadPosts {
         }
     }
 
+	/**********
+	 * <p> Method: makeWrappingLabel() </p>
+	 * 
+	 * <p> Description: Implements the behavior implied by the method name within the Read Posts flow.</p>
+	 */
+    
     private Label makeWrappingLabel(String text) {
         Label l = new Label(text == null ? "" : text);
         l.setWrapText(true);
@@ -546,7 +632,12 @@ public class ControllerReadPosts {
         return l;
     }
 
-    // Build "Filter" + segmented All/Questions/Posts + segmented Unseen/Seen
+	/**********
+	 * <p> Method: buildFilterBar() </p>
+	 * 
+	 * <p> Description: Build "Filter" + segmented All/Questions/Posts + segmented Unseen/Seen</p>
+	 */ 
+    
     private HBox buildFilterBar() {
         // Detach any existing toggles to prevent ghost toggles if re-mounted
         for (Toggle t : new ArrayList<>(kindGroup.getToggles())) t.setToggleGroup(null);
@@ -593,7 +684,11 @@ public class ControllerReadPosts {
         return bar;
     }
 
-    // Mount the filter bar directly ABOVE the postList in the left column
+	/**********
+	 * <p> Method: mountFilterBarAbovePostList() </p>
+	 * 
+	 * <p> Description: Mount the filter bar directly above the postList in the left column</p>
+	 */
     private void mountFilterBarAbovePostList() {
         Platform.runLater(() -> {
             var parent = postList.getParent();
@@ -606,8 +701,13 @@ public class ControllerReadPosts {
             vb.getChildren().add(0, buildFilterBar());
         });
     }
+
+	/**********
+	 * <p> Method: removeLegacyHeaderFilterButtons() </p>
+	 * 
+	 * <p> Description: Remove legacy header toggle buttons "All", "Questions", "Posts" (NOT our new Filter bar)</p>
+	 */
     
- // Remove legacy header toggle buttons "All", "Questions", "Posts" (NOT our new Filter bar)
     private void removeLegacyHeaderFilterButtons() {
         Platform.runLater(() -> {
             if (stage == null || stage.getScene() == null) return;
@@ -627,7 +727,12 @@ public class ControllerReadPosts {
         });
     }
 
-    // DFS: find ToggleButtons labeled All/Questions/Posts that are NOT inside our new "kindbar"
+	/**********
+	 * <p> Method: collectLegacyHeaderToggles() </p>
+	 * 
+	 * <p> Description: DFS: find ToggleButtons labeled All/Questions/Posts that are NOT inside our new "kindbar"</p>
+	 */
+    
     private void collectLegacyHeaderToggles(javafx.scene.Parent node, List<ToggleButton> out) {
         for (javafx.scene.Node ch : node.getChildrenUnmodifiable()) {
             if (ch instanceof ToggleButton tb) {

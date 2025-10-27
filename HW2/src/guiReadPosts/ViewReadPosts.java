@@ -9,18 +9,45 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.util.Objects;
 
-import entityClasses.PostItem;
 import entityClasses.PostCardCell;
+import entityClasses.PostItem;
 
+
+
+/*******
+ * <p> Title: ViewReadPosts Class. </p>
+ * 
+ * <p> Description: View for the Read Posts page. Constructs the JavaFX scene graph and exposes references to interactive controls.</p>
+ * 
+ * <p> Copyright: Group 14 © 2025 </p>
+ * 
+ * @author Group 14
+ * 
+ * @version 1.00		2025-10-24 Initial documentation alignment for guiReadPosts
+ */
 public class ViewReadPosts {
 
     // keep old entry point
-    public static void displayReadPosts(Stage stage, User user) {
+
+	/**********
+	 * <p> Method: displayReadPosts() </p>
+	 * 
+	 * <p> Description: Displays a UI element or updates the scene to reflect state.</p>
+	 */
+	
+	public static void displayReadPosts(Stage stage, User user) {
         displayReadPosts(stage, user, null);   // no preselect
     }
 
     // allow optional initial selection by post id
-    public static void displayReadPosts(Stage stage, User user, Long initialPostId) {
+
+	/**********
+	 * <p> Method: displayReadPosts() </p>
+	 * 
+	 * <p> Description: Displays a UI element or updates the scene to reflect state.</p>
+	 */
+	
+	public static void displayReadPosts(Stage stage, User user, Long initialPostId) {
         // === Left: Categories rail ===
         Label catHdr = new Label("CATEGORIES");
         catHdr.setStyle("-fx-font-weight: bold; -fx-text-fill: #666;");
@@ -80,7 +107,7 @@ public class ViewReadPosts {
         detailsBox.setManaged(false);
 
         // Placeholder when nothing selected
-        Label pickLbl = new Label("Select a post to see details");
+        Label pickLbl = new Label("Select a post to see details.");
         VBox placeholder = new VBox(pickLbl);
         placeholder.setAlignment(Pos.CENTER);
         placeholder.setPadding(new Insets(12));
