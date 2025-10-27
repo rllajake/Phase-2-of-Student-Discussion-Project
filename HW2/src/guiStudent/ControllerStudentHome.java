@@ -1,5 +1,28 @@
 package guiStudent;
 
+/*******
+ * <p> Title: GUIStudentHomePage Class. </p>
+ * 
+ * <p> Description: The Java/FX-based Student Home Page.  This class provides the controller actions
+ * basic on the user's use of the JavaFX GUI widgets defined by the View class.
+ * 
+ * This page contains a number of buttons that have been implemented.  When those buttons
+ * are pressed, a GUI pops up for the function associated with the button that was
+ * been implemented. 
+ * 
+ * The class has been written assuming that the View or the Model are the only class methods that
+ * can invoke these methods.  This is why each has been declared at "protected".  Do not change any
+ * of these methods to public.</p>
+ * 
+ * <p> Copyright: Lynn Robert Carter © 2025 </p>
+ * 
+ * @author Lynn Robert Carter
+ * 
+ * @version 1.00		2025-08-17 Initial version
+ *  
+ */
+
+
 public class ControllerStudentHome {
 
 	/*-*******************************************************************************************
@@ -47,6 +70,15 @@ public class ControllerStudentHome {
 		guiSearchPosts.ViewSearchPosts.displaySearchPosts(ViewStudentHome.theStage, 
 				ViewStudentHome.theUser);
 	}
+	
+
+	/**********
+	 * <p> 
+	 * 
+	 * Title: readPost() Method. </p>
+	 * 
+	 * <p> Description: Protected method that allows the user to read posts only created by the user. </p>
+	 */
 
 	protected static void readMyPosts() {
 		guiMyPosts.ViewMyPosts.displayMyPosts(ViewStudentHome.theStage, 
