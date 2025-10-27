@@ -2,7 +2,19 @@ package entityClasses;
 
 import java.sql.Timestamp;
 
+/*******
+ * <p> Title: PostItem Class. </p>
+ * 
+ * <p> Description: Lightweight data transfer object backing a row in the posts list, carrying post metadata needed by the view and controller.</p>
+ * 
+ * <p> Copyright: Group 14 © 2025 </p>
+ * 
+ * @author Group 14
+ * 
+ * @version 1.00		2025-10-24 Initial documentation alignment for guiReadPosts and guiMyPosts
+ */
 public class PostItem {
+	
     public final long id;
     public final String author;
     public final String thread;   // category
@@ -13,7 +25,7 @@ public class PostItem {
     public final boolean isPrivate;
     public final Timestamp createdAt;
     public int replyCount;
-    public int unreadReplyCount; // NEW
+    public int unreadReplyCount; 
     public boolean isDeleted;
 
     public PostItem(long id, String author, String thread, String title, String kind,
@@ -31,6 +43,11 @@ public class PostItem {
         this.unreadReplyCount = unreadReplyCount;
     }
 
+	/**********
+	 * <p> Method: safeTitle() </p>
+	 * 
+	 * <p> Description: Ensures proper formatting.</p>
+	 */
     public String safeTitle() {
         String t = title == null ? "" : title.trim();
         if (!t.isEmpty()) return t;

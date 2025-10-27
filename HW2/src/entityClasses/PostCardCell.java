@@ -13,11 +13,29 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+
+
+/*******
+ * <p> Title: PostCardCell Class. </p>
+ * 
+ * <p> Description: Custom ListCell implementation to render a PostItem with metadata (title, author, counts) in the posts list.</p>
+ * 
+ * <p> Copyright: Group 14 © 2025 </p>
+ * 
+ * @author Group 14
+ * 
+ * @version 1.00		2025-10-24 Initial documentation alignment for guiReadPosts and guiMyPosts
+ */
 public class PostCardCell extends ListCell<PostItem> {
 
     private static Function<Long, Boolean> isReadFn;
     private static BiConsumer<Long, Boolean> setReadFn;
-    public static void setReadProviders(Function<Long, Boolean> isFn, BiConsumer<Long, Boolean> setFn) {
+
+	/**********
+	 * <p> Method: setReadProviders() </p>
+	 * 
+	 * <p> Description: Updates internal state and/or UI controls accordingly.</p>
+	 */    public static void setReadProviders(Function<Long, Boolean> isFn, BiConsumer<Long, Boolean> setFn) {
         isReadFn = isFn;
         setReadFn = setFn;
     }
@@ -60,7 +78,12 @@ public class PostCardCell extends ListCell<PostItem> {
     }
 
     @Override
-    protected void updateItem(PostItem item, boolean empty) {
+
+	/**********
+	 * <p> Method: updateItem() </p>
+	 * 
+	 * <p> Description: Updates internal state and/or UI controls accordingly.</p>
+	 */    protected void updateItem(PostItem item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
             setGraphic(null);
