@@ -8,8 +8,26 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/*******
+ * <p> Title: ViewCreatePost Class. </p>
+ * 
+ * <p> Description: The Java/FX-based page for creating a validated post.</p>
+ *
+ *  
+ */
+
 public class ViewCreatePost {
 
+	/*********
+	 * <p> Title: displayCreatePost(Stage stage, User user) </p>
+	 * 
+	 * <p> Description: Method responsible for displaying the Create Post Page to the student
+	 * user whenever they click the 'Create Post' button on the Student Home Page. All necessary components 
+	 * for this screen are displayed so the user can input them however they would like, while being validated. </p>
+	 * 
+	 * @param stage signifies the set stage to be displayed for the student
+	 * @param user signifies the current logged in student user
+	 */
     public static void displayCreatePost(Stage stage, User user) {
         Label titleHdr = new Label("Create Post");
         titleHdr.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
@@ -97,5 +115,14 @@ public class ViewCreatePost {
         stage.setScene(new Scene(root));
         stage.setTitle("Create Post");
         stage.show();
+    }
+    
+    /******
+     * <p> Title: ViewCreatePost() Constructor </p>
+     * 
+     * <p> Description: Constructor for the ViewCreatePost class, not used here in this variation. </p>
+     */
+    public ViewCreatePost() {
+    	
     }
 }
