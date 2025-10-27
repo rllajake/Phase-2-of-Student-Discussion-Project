@@ -13,6 +13,20 @@ import java.util.List;
 import entityClasses.PostItem;
 import entityClasses.PostCardCell;
 
+/**
+ * <p> ControllerSearchPosts Class </p>
+ * 
+ * <p> Description: This controller handles user interactions for the Search Posts page.
+ * It processes search queries, filters by category, and displays matching posts in a 
+ * list view. The controller communicates with the database to retrieve posts and manages
+ * navigation to post details and back to the student home page. </p>
+ * 
+ * <p> Copyright: Arizona State University © 2025 </p>
+ * 
+ * @author Group 14
+ * 
+ * @version 1.00    2025-10-27 Initial implementation
+ */
 public class ControllerSearchPosts {
 
     private final Stage stage;
@@ -21,6 +35,19 @@ public class ControllerSearchPosts {
     private final ToggleGroup categoryGroup; // can be "All" => search all threads
     private final ListView<PostItem> resultsList;
 
+    /**
+     * <p> Constructor: ControllerSearchPosts() </p>
+     * 
+     * <p> Description: Initializes the search posts controller with references to the UI
+     * components and user context. Sets up the custom cell factory for displaying search
+     * results in the list view. </p>
+     * 
+     * @param stage         The JavaFX stage for displaying the search interface
+     * @param user          The currently logged-in user
+     * @param searchField   The text field for entering search queries
+     * @param categoryGroup The toggle group for selecting post categories
+     * @param resultsList   The list view for displaying search results
+     */
     public ControllerSearchPosts(Stage stage, User user,
                                  TextField searchField,
                                  ToggleGroup categoryGroup,
@@ -33,6 +60,15 @@ public class ControllerSearchPosts {
         this.resultsList.setCellFactory(lv -> new PostCardCell());
     }
 
+    /**
+     * <p> Method: onSearch() </p>
+     * 
+     * <p> Description: Executes a search query based on the current search text and selected
+     * category filter. Queries the database for matching posts, calculates unread reply counts
+     * for each post, and updates the results list view with the matching posts sorted by 
+     * creation date. </p>
+     * 
+     */
     public void onSearch() {
         String q = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase();
         String cat = getToggleText(categoryGroup); // may be "All" => search all
@@ -100,6 +136,13 @@ public class ControllerSearchPosts {
         resultsList.getItems().setAll(out);
     }
 
+    /**
+     * <p> Method: onOpenSelected() </p>
+     * 
+     * <p> Description: Opens the detailed view for the currently selected post in the search
+     * results list. If no post is selected, no action is taken. </p>
+     * 
+     */
     public void onOpenSelected() {
         PostItem sel = resultsList.getSelectionModel().getSelectedItem();
         if (sel == null) return;
@@ -111,6 +154,13 @@ public class ControllerSearchPosts {
         } 
     }
 
+    /**
+     * <p> Method: onBack() </p>
+     * 
+     * <p> Description: Returns the user to the student home page. If navigation fails, 
+     * closes the current stage. </p>
+     * 
+     */
     public void onBack() {
         try {
             guiStudent.ViewStudentHome.displayStudentHome(stage, user);
@@ -119,6 +169,15 @@ public class ControllerSearchPosts {
         }
     }
 
+    /**
+     * <p> Method: getToggleText() </p>
+     * 
+     * <p> Description: Helper method to extract the text label from the currently selected
+     * toggle button in a toggle group. </p>
+     * 
+     * @param g The toggle group to query
+     * @return  The text of the selected toggle button, or null if nothing is selected
+     */
     private static String getToggleText(ToggleGroup g) {
         if (g == null || g.getSelectedToggle() == null) return null;
         return ((ToggleButton) g.getSelectedToggle()).getText();
