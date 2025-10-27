@@ -2,8 +2,6 @@ package guiSearchPosts;
 
 import database.Database;
 import entityClasses.User;
-import guiReadPosts.PostItem;
-import guiReadPosts.PostCardCell;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -53,7 +51,7 @@ public class ControllerSearchPosts {
         boolean hasCat = (cat != null && !"All".equalsIgnoreCase(cat));
         boolean hasQ = (q != null && !q.isBlank());
         if (hasQ) sql += " AND (LOWER(p.title) LIKE ? OR LOWER(p.content) LIKE ?) ";
-        if (hasCat) sql += " AND LOWER(t.name) = LOWER(?) ";
+        if (hasCat) sql += " AND LOWER(p.thread) = LOWER(?) ";
         sql += " ORDER BY p.created_at DESC, p.id DESC ";
 
         try (Connection c = Database.getConnection();
@@ -105,7 +103,12 @@ public class ControllerSearchPosts {
     public void onOpenSelected() {
         PostItem sel = resultsList.getSelectionModel().getSelectedItem();
         if (sel == null) return;
-        guiReadPosts.ViewReadPosts.displayReadPosts(stage, user, sel.id);
+        try {
+            // open reader with the post preselected
+            guiReadPosts.ViewReadPosts.displayReadPosts(stage, user, sel.id);
+        } catch (Throwable t) {
+            Platform.runLater(stage::close);
+        } 
     }
 
     public void onBack() {

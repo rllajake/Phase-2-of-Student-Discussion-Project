@@ -1,9 +1,7 @@
 package guiSearchPosts;
 
 import entityClasses.User;
-import guiReadPosts.PostItem;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -11,7 +9,6 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 import entityClasses.PostItem;
-import entityClasses.PostCardCell;
 
 public class ViewSearchPosts {
 
@@ -74,5 +71,9 @@ public class ViewSearchPosts {
         stage.setScene(new Scene(root, 1100, 700));
         stage.setTitle("Search Posts");
         stage.show();
+        
+     // Live-refresh when category changes (non-invasive)
+        catGroup.selectedToggleProperty().addListener((obs, o, n) -> controller.onSearch());
+        
     }
 }
