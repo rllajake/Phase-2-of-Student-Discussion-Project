@@ -12,14 +12,40 @@ import java.util.Objects;
 import entityClasses.PostItem;
 import entityClasses.PostCardCell;
 
+/*******
+ * <p> Title: ViewMyPosts Class. </p>
+ * 
+ * <p> Description: View for the Read My Posts page. Constructs the JavaFX scene graph and exposes references to interactive controls.</p>
+ * 
+ * <p> Copyright: Group 14 © 2025 </p>
+ * 
+ * @author Group 14
+ * 
+ * @version 1.00		2025-10-24 Initial documentation alignment for guiMyPosts
+ */
+
 public class ViewMyPosts {
 
     // keep old entry point
+	
+	/**********
+	 * <p> Method: displayReadPosts() </p>
+	 * 
+	 * <p> Description: Displays a UI element or updates the scene to reflect state.</p>
+	 */
+	
     public static void displayMyPosts(Stage stage, User user) {
         displayMyPosts(stage, user, null);   // no preselect
     }
 
     // allow optional initial selection by post id
+    
+    /**********
+	 * <p> Method: displayReadPosts() </p>
+	 * 
+	 * <p> Description: Displays a UI element or updates the scene to reflect state.</p>
+	 */
+    
     public static void displayMyPosts(Stage stage, User user, Long initialPostId) {
         // === Left: Categories rail ===
         Label catHdr = new Label("CATEGORIES");
@@ -160,7 +186,7 @@ public class ViewMyPosts {
 
         Scene scene = new Scene(root, 1200, 700);
         stage.setScene(scene);
-        stage.setTitle("Read Posts");
+        stage.setTitle("Read My Posts");
         stage.show();
     }
 
