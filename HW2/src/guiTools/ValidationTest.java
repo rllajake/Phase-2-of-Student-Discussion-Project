@@ -4,21 +4,56 @@ package guiTools;
 /*******
  * <p> Title: ValidationTest Class. </p>
  * 
- * <p> Description: A Java demonstration for semi-automated tests </p>
+ * <p> Description: A Java demonstration for semi-automated tests. It will print output to the console in order to
+ * test different input validation used in the program. The types of input validation include username,
+ * password, email (for managing account information) as well as input validation for creating, reading,
+ * updating, and deleting a post. <br>
+ * <br>
+ *  In order to validate username, it must consist of 4-16 characters including alphanumeric characters and 
+ *  cannot end with a special character. <br>
+ *  <br>
+ *  For password validation, it must contain at least 8 characters and have
+ *  at least one uppercase and one lowercase letter, one digit, one special character.<br>
+ *  <br>
+ *  Email validation requires the input to have at least one alphanum character followed by an "@" sign that
+ *  also is followed by some number of alphanum chars. The end of the email may have special characters such as
+ *  "." or "-" but CANNOT end with them. <br>
+ *  <br>
+ *  Creating post validation requires the post title and contents to be at least 3 alphanum characters. <br>
+ *  <br>
+ *  Reading post validation requires the post to either not be private, the user must be a reviewer, or the user
+ *  is the one who created the post. <br>
+ *  <br>
+ *  Updating post validation requires the user to be the same as the post author. <br>
+ *  <br>
+ *  Deleting post validation requires the user to be the same as the post author AND the post hasn't
+ *  already been deleted.</p>
  * 
  * <p> Copyright: Lynn Robert Carter © 2022 </p>
  * 
- * @author Team 5
+ * @author Team 14
+ * 
  * 
  */
 public class ValidationTest {
+	
+	 /*****
+     * <p> Method: ValidationTest() </p>
+     * 
+     * <p> Description: This default constructor is not used in this system. </p>
+     */
+    public ValidationTest() {
+    	
+    }
 
 	static int numPassed = 0;	// Counter of the number of passed tests
 	static int numFailed = 0;	// Counter of the number of failed tests
 
-	/*
+	/**********
 	 * This mainline displays a header to the console, performs a sequence of
 	 * test cases, and then displays a footer with a summary of the results
+	 * 
+	 * @param args holds command line arguments passed to the program
 	 */
 	public static void main(String[] args) {
 		/************** Test cases semi-automation report header **************/
@@ -51,24 +86,55 @@ public class ValidationTest {
 		
 		System.out.println("\n================ EMAIL TESTS ================");
 		
-		performEmailTestCase(1, "test@example.com", true);
+		performEmailTestCase(11, "test@example.com", true);
 		
-        performEmailTestCase(2, "test@example", true);
+        performEmailTestCase(12, "test@example", true);
         
-        performEmailTestCase(3, "Amazing@Spid3r-Man", true);
+        performEmailTestCase(13, "Amazing@Spid3r-Man", true);
         
-        performEmailTestCase(4, "F@F.FF" + "F".repeat(250), false);
+        performEmailTestCase(14, "F@F.FF" + "F".repeat(250), false);
         
-        performEmailTestCase(5, "", false);
+        performEmailTestCase(15, "", false);
         
-        performEmailTestCase(6, "abc", false);
+        performEmailTestCase(16, "abc", false);
         
-        performEmailTestCase(7, "whatsup@", false);
+        performEmailTestCase(17, "whatsup@", false);
         
-        performEmailTestCase(8, "whats-up@example.com", false);
+        performEmailTestCase(18, "whats-up@example.com", false);
         
-        performEmailTestCase(9, "whatsup@example-", false);
+        performEmailTestCase(19, "whatsup@example-", false);
 		
+        System.out.println("\n================ POST TESTS ================");
+        
+        //                            title body valid
+        performCreatePostTestCase(20, "",   "",  false);
+        
+        performCreatePostTestCase(21, "abc", "", false);
+        
+        performCreatePostTestCase(22, "a", "bac", false);
+        
+        performCreatePostTestCase(23, "abc", "bac", true);
+        
+        //                          private reviewer creator valid
+        performReadPostTestCase(24, false,  false,   false,  true);
+        
+        performReadPostTestCase(25, true,   false,   false,  false);
+        
+        performReadPostTestCase(26, true,   false,   true,   true);
+        
+        performReadPostTestCase(27, true,   true,    false,  true);
+        
+        //                            creator valid
+        performUpdatePostTestCase(28, true,   true);
+        
+        performUpdatePostTestCase(29, false, false);
+        
+        //                            creator deleted valid
+        performDeletePostTestCase(30, true,   false,  true);
+        
+        performDeletePostTestCase(31, true,   true,   false);
+        
+        performDeletePostTestCase(32, false,  false,  false);
 
 		/************** End of the test cases **************/
 
@@ -79,13 +145,19 @@ public class ValidationTest {
 		System.out.println("Number of tests failed: "+ numFailed);
 	}
 
-	/*
+	/**
 	 * This method sets up the input value for the test from the input parameters,
 	 * displays test execution information, invokes precisely the same recognizer
 	 * that the interactive JavaFX mainline uses, interprets the returned value,
-	 * and displays the interpreted result.
+	 * and displays the interpreted result. This method in particular is used to test for a valid username.
+	 * 
+	 * @param testCase is the test case number that gets displayed in the console output
+	 * 
+	 * @param inputText specifies the input string we are testing is a valid username
+	 * 
+	 * @param expectedPass specifies if we expect the input to be a valid username
 	 */
-	private static void performUsernameTestCase(int testCase, String inputText, boolean expectedPass) {
+	public static void performUsernameTestCase(int testCase, String inputText, boolean expectedPass) {
 
 		/************** Display an individual test case header **************/
 		System.out.println("____________________________________________________________________________\n\nTest case: " + testCase);
@@ -135,8 +207,19 @@ public class ValidationTest {
 		}
 	}
 	
-	// Password Test Case Method
-	private static void performPasswordTestCase(int testCase, String inputText, boolean expectedPass) {
+	/**
+	 * This method sets up the input value for the test from the input parameters,
+	 * displays test execution information, invokes precisely the same recognizer
+	 * that the interactive JavaFX mainline uses, interprets the returned value,
+	 * and displays the interpreted result. This method in particular is used to test for a valid email.
+	 * 
+	 * @param testCase is the test case number that gets displayed in the console output
+	 * 
+	 * @param inputText specifies the input string we are testing is a valid password
+	 * 
+	 * @param expectedPass specifies if we expect the input to be a valid password
+	 */
+	public static void performPasswordTestCase(int testCase, String inputText, boolean expectedPass) {
 	    System.out.println("__\n\nTest case: " + testCase);
 	    System.out.println("Input: \"" + inputText + "\"");
 	    System.out.println("__");
@@ -163,11 +246,17 @@ public class ValidationTest {
 	    }
 	}
 	
-	/*
+	/**
 	 * This method sets up the input value for the test from the input parameters,
 	 * displays test execution information, invokes precisely the same recognizer
 	 * that the interactive JavaFX mainline uses, interprets the returned value,
-	 * and displays the interpreted result.
+	 * and displays the interpreted result. This method in particular is used to test for a valid email.
+	 * 
+	 * @param testCase is the test case number that gets displayed in the console output
+	 * 
+	 * @param inputText specifies the input string we are testing is a valid email
+	 * 
+	 * @param expectedPass specifies if we expect the email to be a valid one
 	 */
 	public static void performEmailTestCase(int testCase, String inputText, boolean expectedPass) {
 		/************** Display an individual test case header **************/
@@ -456,9 +545,21 @@ public class ValidationTest {
 		    return errMessage + "conditions were not satisfied";
 		}
 		
-		public static String emailAddressErrorMessage = "";    // The error message text
-	    public static String emailAddressInput = "";        // The input being processed
-	    public static int emailAddressIndexofError = -1;    // The index where the error was located
+		/**
+		 *  The error message text 
+		 */
+		public static String emailAddressErrorMessage = "";
+		
+		/** 
+		 * The input being processed 
+		 */
+	    public static String emailAddressInput = "";     
+	    
+	    /**
+	     * The index where the error was located 
+	     */
+	    public static int emailAddressIndexofError = -1;    
+	    
 	    private static int state = 0;                        // The current state value
 	    private static int nextState = 0;                    // The next state value
 	    private static boolean finalState = false;            // Is this state a final state?
@@ -709,6 +810,7 @@ public class ValidationTest {
 			return result;
 		}
 		
+		
 		private static void moveToNextCharacter() {
 			currentCharNdx++;
 			if (currentCharNdx < inputLine.length())
@@ -719,4 +821,221 @@ public class ValidationTest {
 				running = false;
 			}
 		}
+		
+		
+		/*******
+		 * <p> Method: void performCreatePostTestCase(int testCase, String postTitle, String postContents,
+		 * boolean expectedPass) </p>
+		 * 
+		 * <p> Description: Runs test case for if the user can create a particular post, they should only be able
+		 * to create the post if the post title and body have at least 3 alphanumeric characters.</p>
+		 * 
+		 * @param testCase is the test case number that gets displayed in the console output
+		 * 
+		 * @param postTitle specifies what the title of the post will be
+		 * 
+		 * @param postContents specifies what the contents of the post will be
+		 * 
+		 * @param expectedPass specifies if we expect the new post to be a valid one
+		 *  
+		 */
+		// CreatePost Test Case Method
+		public static void performCreatePostTestCase(int testCase, String postTitle, String postContents, boolean expectedPass) {
+			/************** Display an individual test case header **************/
+			System.out.println("______________________________________\n\nTest case: " + testCase);
+			System.out.printf("Input: post with title <%s> and contents <%s>\n", postTitle, postContents);
+			
+
+			int titleAlnum = postTitle.replaceAll("[^A-Za-z0-9]", "").length();
+	        int contentsAlnum = postContents.replaceAll("[^A-Za-z0-9]", "").length();
+	        // If the post Title or Contents is empty or less than 3 alphanum characters, the recognizer rejects the input
+			if (postTitle.isBlank() || postContents.isBlank() || titleAlnum < 3 || contentsAlnum < 3) {
+				// If the test case expected the test to pass then this is a failure
+				if (expectedPass) {
+					System.out.printf("***Failure*** The post with title <%s> and contents <%s> is invalid."
+							+ "\nBut it was supposed to be valid, so this is a failure!\n", postTitle, postContents);
+					numFailed++;
+				}
+				// If the test case expected the test to fail then this is a success
+				else {
+					System.out.printf("***Success*** The post with title <%s> and contents <%s> is invalid."
+							+ "\nBut it was supposed to be invalid, so this is a pass!\n", postTitle, postContents);
+					numPassed++;
+				}
+				
+			} else {
+				// If the test case expected the test to pass then this is a success
+				if (expectedPass) {
+					System.out.printf("***Success*** The post with title <%s> and contents <%s> is valid, so this is a pass!\n", postTitle, postContents);
+					numPassed++;
+				}
+				// If the test case expected the test to fail then this is a failure
+				else {
+					System.out.printf("***Failure*** The post with title <%s> and contents <%s> is valid."
+							+ "\nBut it was supposed to be invalid, so this is a failure!\n", postTitle, postContents);
+					numFailed++;
+				}
+			}
+		}
+		
+		
+		/*******
+		 * <p> Method: void performReadPostTestCase(int testCase, boolean privatePost, boolean userIsReviewer,
+		 * boolean userIsPostAuthor, boolean expectedPass) </p>
+		 * 
+		 * <p> Description: Runs test case for if the user can read a particular post, they should only be able
+		 * to read the post if they are either the post author, a reviewer, or if the post isn't private.</p>
+		 * 
+		 * @param testCase is the test case number that gets displayed in the console output
+		 * 
+		 * @param privatePost specifies if post is private or not
+		 * 
+		 * @param userIsReviewer specifies if user has the role of reviewer
+		 * 
+		 * @param userIsPostAuthor specifies if the user actually created the post
+		 * 
+		 * @param expectedPass specifies if we expect the post to be readable by the user
+		 *  
+		 */
+		// ReadPost Test Case Method
+		public static void performReadPostTestCase(int testCase, boolean privatePost, boolean userIsReviewer, boolean userIsPostAuthor, boolean expectedPass) {
+			/************** Display an individual test case header **************/
+			System.out.println("______________________________________\n\nTest case: " + testCase);
+			System.out.printf("Input: privatePost %b, userIsReviewer %b, userIsPostAuthor %b\n", privatePost, userIsReviewer, userIsPostAuthor);
+			
+			// If the post is not private or the user is a reviewer or the post author, they should be able to read the post
+			if (!privatePost || userIsReviewer || userIsPostAuthor) {
+				// If the test case expected the test to pass then this is a success
+				if (expectedPass) {
+					System.out.printf("***Success*** The post with details privatePost %b, userIsReviewer %b,"
+							+ " userIsPostAuthor %b can be read, so this is a pass!\n", privatePost, userIsReviewer, userIsPostAuthor);
+					numPassed++;
+				}
+				// If the test case expected the test to fail then this is a failure
+				else {
+					System.out.printf("***Failure*** The post with details privatePost %b, userIsReviewer %b,"
+							+ " userIsPostAuthor %b can be read,"
+							+ "\nBut it wasn't supposed to be readable, so this is a failure!\n", privatePost, userIsReviewer, userIsPostAuthor);
+					numFailed++;
+				}
+				
+			} else {
+				// If the test case expected the test to pass then this is a failure
+				if (expectedPass) {
+					System.out.printf("***Failure*** The post with details privatePost %b, userIsReviewer %b,"
+							+ " userIsPostAuthor %b cannot be read,"
+							+ "\nBut it was supposed to be readable, so this is a failure!\n", privatePost, userIsReviewer, userIsPostAuthor);
+					numFailed++;
+				}
+				// If the test case expected the test to fail then this is a success
+				else {
+					System.out.printf("***Success*** The post with details privatePost %b, userIsReviewer %b,"
+							+ " userIsPostAuthor %b cannot be read,"
+							+ "\nBut it wasn't supposed to be readable, so this is a pass!\n", privatePost, userIsReviewer, userIsPostAuthor);
+					numPassed++;
+				}
+			}
+		}
+		
+		
+		/*******
+		 * <p> Method: void performUpdatePostTestCase(int testCase, boolean userIsPostAuthor, boolean expectedPass) </p>
+		 * 
+		 * <p> Description: Runs test case for if the user should be able to update a post given
+		 * whether they are the post author.</p>
+		 * 
+		 * @param testCase is the test case number that gets displayed in the console output
+		 * 
+		 * @param userIsPostAuthor specifies if the user actually created the post
+		 * 
+		 * @param expectedPass specifies if we expect the post to be updatable by the user
+		 *  
+		 */
+		// UpdatePost Test Case Method
+		public static void performUpdatePostTestCase(int testCase, boolean userIsPostAuthor, boolean expectedPass) {
+			/************** Display an individual test case header **************/
+			System.out.println("______________________________________\n\nTest case: " + testCase);
+			System.out.printf("Input: userIsPostAuthor %b\n", userIsPostAuthor);
+			
+			// If the user is the author of the post they should be able to update it
+			if (userIsPostAuthor) {
+				// If the test case expected the test to pass then this is a success
+				if (expectedPass) {
+					System.out.println("***Success*** The post can be updated, so this is a pass!");
+					numPassed++;
+				}
+				// If the test case expected the test to fail then this is a failure
+				else {
+					System.out.println("***Failure*** The post can be updated,"
+							+ "\nBut it wasn't supposed to be updatable, so this is a failure!");
+					numFailed++;
+				}
+				
+			} else {
+				// If the test case expected the test to pass then this is a failure
+				if (expectedPass) {
+					System.out.println("***Failure*** The post cannot be updated,"
+							+ "\nBut it was supposed to be updatable, so this is a failure!");
+					numFailed++;
+				}
+				// If the test case expected the test to fail then this is a success
+				else {
+					System.out.println("***Success*** The post cannot be updated,"
+							+ "\nBut it wasn't supposed to be updatable, so this is a pass!");
+					numPassed++;
+				}
+			}
+		}
+		
+		
+		/*******
+		 * <p> Method: void performDeletePostTestCase(int testCase, boolean userIsPostAuthor, boolean postAlreadyDeleted, boolean expectedPass) </p>
+		 * 
+		 * <p> Description: Runs test case for if the user should be able to delete a post given
+		 * whether they are the post author and if the post hasn't already been deleted.</p>
+		 * 
+		 * @param testCase is the test case number that gets displayed in the console output
+		 * 
+		 * @param userIsPostAuthor specifies if the user actually created the post
+		 * 
+		 * @param postAlreadyDeleted specifies if the post has already been deleted before
+		 * 
+		 * @param expectedPass specifies if we expect the post to be deletable by the user
+		 *  
+		 */
+		// DeletePost Test Case Method
+		public static void performDeletePostTestCase(int testCase, boolean userIsPostAuthor, boolean postAlreadyDeleted, boolean expectedPass) {
+			/************** Display an individual test case header **************/
+			System.out.println("______________________________________\n\nTest case: " + testCase);
+			System.out.printf("Input: userIsPostAuthor %b, postAlreadyDeleted %b\n", userIsPostAuthor, postAlreadyDeleted);
+			
+			// If the user is the author of the post and it's not already deleted they should be able to delete it
+			if (userIsPostAuthor && !postAlreadyDeleted) {
+				// If the test case expected the test to pass then this is a success
+				if (expectedPass) {
+					System.out.println("***Success*** The post can be deleted, so this is a pass!");
+					numPassed++;
+				}
+				// If the test case expected the test to fail then this is a failure
+				else {
+					System.out.println("***Failure*** The post can be deleted,"
+							+ "\nBut it wasn't supposed to be deletable, so this is a failure!");
+					numFailed++;
+				}
+				
+			} else {
+				// If the test case expected the test to pass then this is a failure
+				if (expectedPass) {
+					System.out.println("***Failure*** The post cannot be deleted,"
+							+ "\nBut it was supposed to be deletable, so this is a failure!");
+					numFailed++;
+				}
+				// If the test case expected the test to fail then this is a success
+				else {
+					System.out.println("***Success*** The post cannot be deleted,"
+							+ "\nBut it wasn't supposed to be deletable, so this is a pass!");
+					numPassed++;
+				}
+			}
+		}		
 }
